@@ -1,4 +1,4 @@
-# Laravel API with JWT Authentication
+# Laravel API For Project Management TASK (Plantera)
 
 ## 📌 Deskripsi
 Proyek ini adalah REST API berbasis Laravel yang menggunakan **JWT (JSON Web Token)** untuk otentikasi.  
