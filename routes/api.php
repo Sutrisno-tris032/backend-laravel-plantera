@@ -7,6 +7,8 @@ use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Master\LookupStatusController;
+
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
@@ -68,5 +70,9 @@ Route::middleware('jwt')->group(function () {
         Route::post('/submit', [SprintController::class, 'store']); // POST /sprint/submit
         Route::put('/{sprint_uid}/update', [SprintController::class, 'update']); // PUT /sprint/{sprint_uid}/update
         Route::delete('/{sprint_uid}', [SprintController::class, 'destroy']); // DELETE /sprint/{sprint_uid}
+    });
+
+    Route::prefix('lookup')->group(function () {
+        Route::get('/status/{category_id}', [LookupStatusController::class,'lookupStatus']); // GET /lookup/status/{categpory_id}
     });
 });
