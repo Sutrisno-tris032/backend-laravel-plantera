@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AssignedNotificationEmail;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -51,6 +53,17 @@ class TaskController extends Controller
             ]);
 
             $task = Task::create($validated);
+
+            $emailDetails = [
+                'assigned' => 'Sutrisno',
+                'task'     => $task->task_name,
+                'deadline' => $task->end_date
+            ];
+
+            $emailSubject = 'You Have New Task Assigned';
+
+            Mail::to('sutris.devpemula@gmail.com')
+                ->send(new AssignedNotificationEmail($emailDetails, $emailSubject));
 
             return $this->successResponse("Data created successfully", $task, 200);
         } catch (\Throwable $th) {
@@ -111,7 +124,7 @@ class TaskController extends Controller
 
             $task = Task::findOrFail($task_uid);
 
-            $task->delete($task);
+            $task->delete();
 
             return $this->successResponse("Data deleted successfully", $task, 200);
         } catch (\Throwable $th) {
